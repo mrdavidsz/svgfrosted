@@ -21,3 +21,7 @@ function search(input, template) {
 
 	return template.replace("%s", encodeURIComponent(input));
 }
+
+if (typeof window !== "undefined") {
+	window.search = search;
+}

@@ -11,6 +11,11 @@
 `);
 
 "use strict";
+var BareMux = window.BareMux;
+var $scramjetLoadController = window.$scramjetLoadController;
+var registerSW = window.registerSW;
+var search = window.search;
+
 var qs = (sel) => document.querySelector(sel);
 var qsa = (sel) => Array.from(document.querySelectorAll(sel));
 

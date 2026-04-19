@@ -44,3 +44,7 @@ async function registerSW() {
 
 	return registration;
 }
+
+if (typeof window !== "undefined") {
+	window.registerSW = registerSW;
+}
