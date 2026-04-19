@@ -8659,6 +8659,7 @@ function goHome() {
 }
 
 function showBlank() {
+	showLoading(false);
 	hideInternalPages();
 	blankState.style.display = "flex";
 	tabFrames.forEach((item) => {
@@ -8673,6 +8674,7 @@ function hideBlank() {
 }
 
 function showSettingsPage() {
+	showLoading(false);
 	blankState.style.display = "none";
 	tabFrames.forEach((item) => {
 		item.element.style.display = "none";
@@ -8689,6 +8691,7 @@ function showSettingsPage() {
 }
 
 function showPartnersPage() {
+	showLoading(false);
 	blankState.style.display = "none";
 	tabFrames.forEach((item) => {
 		item.element.style.display = "none";
@@ -8705,6 +8708,7 @@ function showPartnersPage() {
 }
 
 function showGamesPage() {
+	showLoading(false);
 	blankState.style.display = "none";
 	tabFrames.forEach((item) => {
 		item.element.style.display = "none";
@@ -8721,6 +8725,7 @@ function showGamesPage() {
 }
 
 function showAiPage() {
+	showLoading(false);
 	blankState.style.display = "none";
 	tabFrames.forEach((item) => {
 		item.element.style.display = "none";
@@ -8737,6 +8742,7 @@ function showAiPage() {
 }
 
 function showExtensionStorePage() {
+	showLoading(false);
 	blankState.style.display = "none";
 	tabFrames.forEach((item) => {
 		item.element.style.display = "none";
@@ -8754,6 +8760,7 @@ function showExtensionStorePage() {
 }
 
 function showCreditsPage() {
+	showLoading(false);
 	blankState.style.display = "none";
 	tabFrames.forEach((item) => {
 		item.element.style.display = "none";
