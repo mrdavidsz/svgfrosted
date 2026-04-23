@@ -1,8 +1,9 @@
-importScripts('uv.bundle.js?v=5');
-importScripts('uv.config.js?v=5');
-importScripts(__uv$config.sw || 'uv.sw.js?v=5');
+importScripts('uv.bundle.js?v=6');
+importScripts('uv.config.js?v=6');
+importScripts(__uv$config.sw || 'uv.sw.js?v=6');
 
-const uvServiceWorker = new UVServiceWorker();
+const uvServiceWorker = self.__frostedUvServiceWorker || new self.UVServiceWorker();
+self.__frostedUvServiceWorker = uvServiceWorker;
 
 let config = {
     blocklist: new Set(),

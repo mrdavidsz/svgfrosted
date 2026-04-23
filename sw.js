@@ -1,11 +1,12 @@
-importScripts("./scram/scramjet.all.js?v=5");
+importScripts("./scram/scramjet.all.js?v=6");
+importScripts("./uv/uv.bundle.js?v=6");
+importScripts("./uv/uv.config.js?v=6");
+importScripts("./uv/uv.sw.js?v=6");
 
 // trying to hard block the new adblock.turtlecute.org scripts (fakeads)
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 const scramjet = new ScramjetServiceWorker();
-let uvServiceWorker = null;
-let uvRuntimeLoadError = null;
-let uvRuntimeLoadPromise = null;
+const uvServiceWorker = new UVServiceWorker();
 
 const hardBlockedAdKeywords = [
 	"adblock.turtlecute.org/js/pagead.js",
@@ -265,33 +266,6 @@ async function loadScramjetConfigWithRecovery() {
 	}
 }
 
-function ensureUvRuntime() {
-	if (uvServiceWorker) {
-		return Promise.resolve(uvServiceWorker);
-	}
-	if (uvRuntimeLoadError) {
-		return Promise.reject(uvRuntimeLoadError);
-	}
-	if (uvRuntimeLoadPromise) {
-		return uvRuntimeLoadPromise;
-	}
-	uvRuntimeLoadPromise = Promise.resolve().then(() => {
-		try {
-			if (!self.__uv$config || !self.UVServiceWorker) {
-				importScripts("./uv/uv.bundle.js?v=5", "./uv/uv.config.js?v=5", "./uv/uv.sw.js?v=5");
-			}
-			uvServiceWorker = new self.UVServiceWorker();
-			return uvServiceWorker;
-		} catch (error) {
-			uvRuntimeLoadError = error;
-			throw error;
-		} finally {
-			uvRuntimeLoadPromise = null;
-		}
-	});
-	return uvRuntimeLoadPromise;
-}
-
 async function handleRequest(event) {
 	if (isHardBlockedAdRequest(event.request)) {
 		return new Response("Blocked by Frosted adblockdY'-", {
@@ -305,19 +279,7 @@ async function handleRequest(event) {
 	}
 
 	if (isUvRequest(event.request.url)) {
-		try {
-			return (await ensureUvRuntime()).fetch(event);
-		} catch (error) {
-			console.error("[frosted-sw] uv fetch failed:", error);
-			return new Response("Ultraviolet failed to load this page.", {
-				status: 502,
-				statusText: "Ultraviolet Error",
-				headers: {
-					"content-type": "text/plain; charset=utf-8",
-					"cache-control": "no-store",
-				},
-			});
-		}
+		return uvServiceWorker.fetch(event);
 	}
 
 	if (isScramjetRequest(event.request.url) || isScramjetWasmRequest(event.request.url)) {
