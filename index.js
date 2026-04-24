@@ -9233,14 +9233,14 @@ function getWispTransportCandidates() {
 function getTransportLoaders() {
 	return [
 		{
-			name: "libcurl",
-			modulePath: `${appBasePath}libcurl/index.mjs`,
-			argsForWisp: (wispUrl) => [{ websocket: wispUrl }],
-		},
-		{
 			name: "epoxy",
 			modulePath: `${appBasePath}epoxy/index.mjs`,
 			argsForWisp: (wispUrl) => [{ wisp: wispUrl }],
+		},
+		{
+			name: "libcurl",
+			modulePath: `${appBasePath}libcurl/index.mjs`,
+			argsForWisp: (wispUrl) => [{ websocket: wispUrl }],
 		},
 	];
 }

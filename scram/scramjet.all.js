@@ -4011,7 +4011,8 @@ ${l}`
                 for (const node of document.querySelectorAll("#hostname")) node.textContent = ${JSON.stringify(location.hostname)};
                 reload.addEventListener("click", () => location.reload());
                 version.textContent = ${JSON.stringify(globalThis.$scramjetVersion?.version || "unknown")};
-                build.textContent = ${JSON.stringify(globalThis.$scramjetVersion?.build || "unknown")};
+                const buildNode = document.getElementById('build');
+                if (buildNode) buildNode.textContent = ${JSON.stringify(globalThis.$scramjetVersion?.build || "unknown")};
 
                 document.getElementById('copy-button').addEventListener('click', async () => {
                     const text = document.getElementById('errorTrace').value;
@@ -4172,7 +4173,7 @@ button:hover {
     </div>
 
     <div class="footer">
-        Scramjet<span id="version"></span>
+        Scramjet <span id="version"></span><span id="build"></span>
     </div>
 
 </div>
